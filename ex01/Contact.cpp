@@ -2,12 +2,10 @@
 
 Contact::Contact()
 {
-	std::cout << "Contact constructor called" << std::endl;
 }
 
 Contact::~Contact()
 {
-	std::cout << "Contact destructor called" << std::endl;
 }
 
 void Contact::setFirstName(std::string firstName)
@@ -48,4 +46,26 @@ void Contact::setDarkestSecret(std::string darkestSecret)
 std::string Contact::getDarkestSecret() const
 {
 	return (this->_darkestSecret);
+}
+
+std::string Contact::getPhoneNumber() const
+{
+	return (this->_phoneNumber);
+}
+
+void Contact::setPhoneNumber(std::string phoneNumber)
+{
+	this->_phoneNumber = phoneNumber;
+}
+
+void Contact::setIndex(int *index, bool isFull)
+{
+	this->_index = *index;
+	if (!isFull)
+		*index += 1;
+}
+
+int Contact::getIndex() const
+{
+	return (this->_index);
 }

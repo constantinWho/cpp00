@@ -1,13 +1,33 @@
 #include "PhoneBook.hpp"
 
-bool isValid(const std::string& command, const std::string& type)
+bool	isNumber(const std::string& line)
 {
-	if (command.empty())
+	for (size_t i = 0; i < line.length(); i++)
+	{
+		if (!isdigit(line[i]))
+			return false;
+	}
+	return true;
+}
+
+bool isValid(const std::string& line, const std::string& type)
+{
+	if (line.empty())
 	{
 		std::cout << RED << "Error: empty "<< type << RESET << std::endl;
 		return false;
 	}
-	else if (command.find(' ') != std::string::npos)
+	else if (line.find(' ') != std::string::npos && type == "phone number")
+	{
+		std::cout << RED << "Error: " << type << " should be only one string of digits" << RESET << std::endl;
+		return false;
+	}
+	if (type == "phone number" && !isNumber(line))
+	{
+		std::cout << RED << "Error: " << type << " should be only digits" << RESET << std::endl;
+		return false;
+	}
+	else if (line.find(' ') != std::string::npos && type != "darkest secret")
 	{
 		std::cout << RED << "Error: " << type << " should be a single word" << RESET << std::endl;
 		return false;
@@ -19,12 +39,14 @@ void	chooseSetter(Contact& newContact, const std::string& type, std::string& lin
 {
 	if (type == "first name")
 		newContact.setFirstName(line);
-	if (type == "last name")
+	else if (type == "last name")
 		newContact.setLastName(line);
-	if (type == "nickname")
+	else if (type == "nickname")
 		newContact.setNickname(line);
-	if (type == "darkest secret")
+	else if (type == "darkest secret")
 		newContact.setDarkestSecret(line);
+	else if (type == "phone number")
+		newContact.setPhoneNumber(line);
 }
 
 void	addInfo(Contact& newContact, const std::string& type)
@@ -34,10 +56,7 @@ void	addInfo(Contact& newContact, const std::string& type)
 	std::cout << GREEN << "Enter " << type << ": " << RESET;
 	std::getline(std::cin, line);
 	if (isValid(line, type))
-	{
 		chooseSetter(newContact, type, line);
-		std::cout << "You entered: " << line << std::endl;
-	}
 	else
 		addInfo(newContact, type);
 }
@@ -46,8 +65,10 @@ int	main()
 {
 	PhoneBook	phoneBook;
 	Contact		newContact;
+	int			index;
 	std::string	line;
 
+	index = 0;
 	while (1)
 	{
 		std::cout << CYAN << "Enter a command: " << RESET;
@@ -62,11 +83,22 @@ int	main()
 			addInfo(newContact, "last name");
 			addInfo(newContact, "nickname");
 			addInfo(newContact, "darkest secret");
+			addInfo(newContact, "phone number");
+			newContact.setIndex(&index, false);
+			phoneBook.addContact(newContact);
+		}
+		else if (line == "SEARCH")
+		{
+			phoneBook.printContacts();
+			std::cout << GREEN << "Enter index: " << RESET;
+			std::getline(std::cin, line);
+			if (isNumber(line) && std::atoi(line.c_str()) < index)
+				phoneBook.printContact(std::atoi(line.c_str()));
+			else
+				std::cout << RED << "Error: invalid index" << RESET << std::endl;
 		}
 		else
-		{
 			std::cout << RED << "Error: invalid command" << RESET << std::endl;
-		}
 	}
 	return (0);
 }

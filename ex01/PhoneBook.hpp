@@ -2,6 +2,9 @@
 # define PHONE_BOOK_HPP
 
 # include <iostream>
+# include <cctype>
+# include <iomanip>
+# include <cstdlib>
 # include "Contact.hpp"
 
 const std::string RED = "\033[1;31m";
@@ -15,18 +18,21 @@ const std::string RESET = "\033[0m";
 class PhoneBook {
 
 	private:
-		//Contact		_contacts[8];
+		Contact		_contacts[8];
 		int			_contactCount;
+
 	public:
+
+		int			oldestIndex;
 		// Constructor and destructor
 		PhoneBook();
 		~PhoneBook();
 
 		// Methods
-		void printWelcomeMessage(void) const;
-/* 		void addContact(Contact contact); */
-/*		void printContacts();
-		void printContact(int index); */
+		void		printWelcomeMessage(void) const;
+		void		addContact(Contact contact);
+		void		printContacts() const;
+		void		printContact(int index);
 };
 
 #endif
