@@ -4,13 +4,23 @@ CC = c++
 FLAGS = -Wall -Wextra -Werror
 RM = rm -rf
 
-FILES = main.cpp Contact.cpp PhoneBook.cpp
-
-SRC = $(FILES:=.cpp)
-OBJ = $(FILES:=.0)
-HEADER = Contact.hpp PhoneBook.hpp
+FILES = main Contact PhoneBook
+OBJ = $(FILES:=.o)
 
 all: $(NAME)
 
-$(NAME): $(OBJ) $(HEADER)
-	$(CC) $(OBJ) -o $(NAME)
+$(NAME): $(OBJ)
+	$(CC) $(FLAGS) $(OBJ) -o $(NAME)
+
+%.o: %.cpp
+	$(CC) $(FLAGS) -c $< -o $@
+
+clean:
+	$(RM) $(OBJ)
+
+fclean: clean
+	$(RM) $(NAME)
+
+re: fclean all
+
+.PHONY: all clean fclean re
