@@ -2,7 +2,15 @@
 # define PHONE_BOOK_HPP
 
 # include <iostream>
-/* # include "Contact.hpp" */
+# include "Contact.hpp"
+
+const std::string RED = "\033[1;31m";
+const std::string MAGENTA = "\033[1;35m";
+const std::string CYAN = "\033[1;36m";
+const std::string GREEN = "\033[1;32m";
+const std::string YELLOW = "\033[1;33m";
+const std::string BLUE = "\033[1;34m";
+const std::string RESET = "\033[0m";
 
 class PhoneBook {
 
@@ -16,8 +24,8 @@ class PhoneBook {
 
 		// Methods
 		void printWelcomeMessage(void) const;
-/* 		void addContact(Contact contact);
-		void printContacts();
+/* 		void addContact(Contact contact); */
+/*		void printContacts();
 		void printContact(int index); */
 };
 
