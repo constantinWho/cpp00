@@ -1,20 +1,22 @@
-NAME = megaphone
+SRC = MegaPhone.cpp
+OBJ = $(SRC:.cpp=.o)
+CC = g++
+RM = rm -f
+CPPFLAGS = -Wall -Wextra -Werror -std=c++98 -pedantic
 
-CC = c++
-FLAGS = -Wall -Wextra -Werror -std=c++98
-RM = rm -rf
+NAME = MegaPhone
 
 all: $(NAME)
 
-$(NAME):
-	$(CC) $(FLAGS) megaphone.cpp -o $(NAME)
+$(NAME): $(OBJ)
+	$(CC) $(CPPFLAGS) $(OBJ) -o $(NAME)
 
 clean:
+	$(RM) $(OBJ)
+
+fclean: clean
 	$(RM) $(NAME)
 
-fclean:
-	$(RM) $(NAME)
+re: fclean $(NAME)
 
-re: clean all
-
-.PHONY: all clean re
+.PHONY: all clean fclean re

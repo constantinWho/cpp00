@@ -71,6 +71,8 @@ int	main()
 	index = 0;
 	while (1)
 	{
+		if(std::cin.eof())
+			break ;
 		std::cout << CYAN << "Enter a command: " << RESET;
 		std::getline(std::cin, line);
 		if (!isValid(line, "command"))
